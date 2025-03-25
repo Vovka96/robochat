@@ -2,9 +2,9 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-const indexHtmlFile = path.join(__dirname, 'static', 'index.html');
-const scriptFile = path.join(__dirname, 'static', 'script.js');
-const styleFile = path.join(__dirname, 'static', 'style.css');
+const indexHtmlFile = fs.readFileSync(path.join(__dirname, 'static', 'index.html'));
+const scriptFile = fs.readFileSync(path.join(__dirname, 'static', 'script.js'));
+const styleFile = fs.readFileSync(path.join(__dirname, 'static', 'style.css'));
 
 const server = http.createServer((req, res) => {
     switch(req.url) {
@@ -12,6 +12,7 @@ const server = http.createServer((req, res) => {
         case '/script.js': return res.end(scriptFile);
         case '/style.css': return res.end(styleFile);
     }
+    return res.end('Error 404');
 });
 
 server.listen(3000);
